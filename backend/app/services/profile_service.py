@@ -2,7 +2,7 @@ from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.schemas.user import UserProfileCreate, UserProfileResponse
-from backend.app.repositories.profile_repo import ProfileRepository
+from app.repositories.profile_repo import ProfileRepository
 from app.utils.embeddings import generate_profile_embedding
 
 class ProfileService:
