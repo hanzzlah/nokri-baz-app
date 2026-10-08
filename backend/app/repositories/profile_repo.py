@@ -1,36 +1,46 @@
 from uuid import UUID
-from sqlalchemy import select, text
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.job import Job
-from app.schemas.job import JobMatchResponse
+from app.models.user import UserProfile
+from app.schemas.user import UserProfileCreate
 
 
-class JobRepository:
+class ProfileRepository:
     def __init__(self, db: AsyncSession):
         self.db = db
 
-    async def get_by_id(self, job_id: str) -> Job | None:
-        """Fetch a single job record from public.jobs view."""
-        stmt = select(Job).where(Job.id == job_id)
+    async def get_by_user_id(self, user_id: UUID) -> UserProfile | None:
+        """Fetch a user profile by user UUID."""
+        stmt = select(UserProfile).where(UserProfile.user_id == user_id)
         result = await self.db.execute(stmt)
         return result.scalars().first()
 
-    async def match_jobs_for_user(
+    async def upsert_profile(
         self, 
         user_id: UUID, 
-        limit: int = 20
-    ) -> list[JobMatchResponse]:
-        """Executes the PostgreSQL 2-stage matching RPC function."""
-        sql = text("""
-            SELECT job_id, title, employer, source, match_score
-            FROM match_jobs_for_user(:user_id, :limit_val)
-        """)
-        
-        result = await self.db.execute(
-            sql, 
-            {"user_id": str(user_id), "limit_val": limit}
-        )
-        
-        rows = result.mappings().all()
-        return [JobMatchResponse.model_validate(row) for row in rows]
+        profile_data: UserProfileCreate, 
+        embedding: list[float] | None = None
+    ) -> UserProfile:
+        """Create a new profile or update an existing one, including vector embedding."""
+        profile = await self.get_by_user_id(user_id)
+
+        if not profile:
+            # Create new profile instance
+            profile = UserProfile(
+                user_id=user_id, 
+                **profile_data.model_dump()
+            )
+            if embedding:
+                profile.profile_embedding = embedding
+            self.db.add(profile)
+        else:
+            # Update existing profile fields
+            for key, value in profile_data.model_dump().items():
+                setattr(profile, key, value)
+            if embedding:
+                profile.profile_embedding = embedding
+
+        await self.db.commit()
+        await self.db.refresh(profile)
+        return profile
