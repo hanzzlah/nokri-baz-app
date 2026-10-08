@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gov-jobs-saas-backend"
+version = "0.1.0"
+description = "Backend microservice for Government Jobs Matching SaaS"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    # Core Framework & Async Server
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.28.0",
+
+    # Async Database & ORM
+    "sqlalchemy[asyncio]>=2.0.28",
+    "asyncpg>=0.29.0",
+    "alembic>=1.13.0",
+
+    # Settings & Data Validation
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.2.0",
+
+    # Security & Auth Token Verification
+    "pyjwt[crypto]>=2.8.0",
+
+    # AI Embeddings & Async HTTP Client
+    "openai>=1.14.0",
+    "httpx>=0.27.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.1.0",
+    "pytest-asyncio>=0.23.0"
+]
