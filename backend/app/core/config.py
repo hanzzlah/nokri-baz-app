@@ -25,7 +25,10 @@ class Settings(BaseSettings):
         case_sensitive=True,
         extra="ignore",
     )
-
+    LEMON_SQUEEZY_API_KEY: str | None = None
+    LEMON_SQUEEZY_WEBHOOK_SECRET: str | None = None
+    LEMON_SQUEEZY_STORE_ID: str | None = None
+    LEMON_SQUEEZY_VARIANT_ID: str | None = None
 
 # Instantiate single global settings instance
 settings = Settings()
