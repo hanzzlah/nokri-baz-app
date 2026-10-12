@@ -23,7 +23,7 @@ class UserProfile(Base):
     degree_title: Mapped[str | None] = mapped_column(String)
     experience_years: Mapped[int] = mapped_column(Integer, default=0)
     
-    profile_embedding: Mapped[list[float] | None] = mapped_column(Vector(1536))
+    profile_embedding: Mapped[list[float] | None] = mapped_column(Vector(1024))
     resume_url: Mapped[str | None] = mapped_column(String)
     
     created_at: Mapped[datetime] = mapped_column(

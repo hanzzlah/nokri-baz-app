@@ -38,7 +38,7 @@ class Job(Base):
     is_active: Mapped[bool] = mapped_column(Boolean)
     
     search_text: Mapped[str | None] = mapped_column(String)
-    embedding: Mapped[list[float] | None] = mapped_column(Vector(1536))
+    embedding: Mapped[list[float] | None] = mapped_column(Vector(1024))
     
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
