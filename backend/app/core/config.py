@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     SUPABASE_JWT_SECRET: str
 
     # AI & Embeddings
-    VOYAGE_API_KEY: str
+    COHERE_API_KEY: str
 
     # WhatsApp Integration
     WHATSAPP_API_TOKEN: str = ""
