@@ -12,7 +12,7 @@ app = FastAPI(
 # CORS configuration to allow your Next.js frontend to communicate with this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Next.js default port
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -21,6 +21,7 @@ app.add_middleware(
 # Include the API version 1 router
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
+# localhost forwarded at https://posing-suffrage-pentagram.ngrok-free.dev via ngrok
 @app.get("/")
 async def root():
     """Health check endpoint."""

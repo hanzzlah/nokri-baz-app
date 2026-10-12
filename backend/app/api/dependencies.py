@@ -1,5 +1,6 @@
 import jwt
 from uuid import UUID
+from jwt import PyJWKClient
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -11,22 +12,29 @@ from app.core.database import get_db
 from app.repositories.subscription_repo import SubscriptionRepository
 
 security = HTTPBearer()
+jwks_url = f"{settings.SUPABASE_URL}/auth/v1/.well-known/jwks.json"
+jwks_client = PyJWKClient(jwks_url)
 
 def get_current_user_id(credentials: HTTPAuthorizationCredentials = Depends(security)) -> UUID:
     """Verifies the Supabase JWT and extracts the user_id (sub)."""
+    token = credentials.credentials
     try:
-        # Supabase signs tokens using HS256 and your project's JWT Secret
+        # Print token header for diagnostic inspection
+        signing_key = jwks_client.get_signing_key_from_jwt(token)
+
+        # Pass explicit list of accepted algorithms
         payload = jwt.decode(
-            credentials.credentials,
-            settings.SUPABASE_JWT_SECRET,
-            algorithms=["HS256"],
+            token,
+            signing_key.key,
+            algorithms=["ES256", "RS256", "HS256"],
             audience="authenticated"
         )
         return UUID(payload["sub"])
-    except jwt.PyJWTError:
+    except jwt.PyJWTError as e:
+        print(f"JWT Verification Error: {e}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or expired authentication token"
+            detail=f"Invalid or expired authentication token: {str(e)}"
         )
 
 async def get_pro_user(

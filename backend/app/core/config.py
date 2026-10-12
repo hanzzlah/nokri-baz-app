@@ -8,6 +8,7 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str
+    SUPABASE_URL: str
 
     # Supabase Auth
     SUPABASE_JWT_SECRET: str
