@@ -27,13 +27,20 @@ class JobResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-
 class JobMatchResponse(BaseModel):
-    """Returned by the match_jobs_for_user RPC function."""
-    job_id: str
+    """Returned by the match_jobs_for_user RPC function, enriched with jobs table data."""
+    id: str
     title: str
-    employer: str | None = None
-    source: str
-    match_score: int = Field(..., ge=0, le=100, description="Matching percentage (0 to 100)")
+    department: str | None = None
+    province: str | None = None
+    division: str | None = None
+    district: str | None = None
+    type: str | None = None
+    salary_range: str | None = None
+    deadline: str | None = None
+    similarity_score: int
+    education_years_req: int = 0
+    experience_req: int = 0
+    portal_source: str
 
     model_config = ConfigDict(from_attributes=True)
