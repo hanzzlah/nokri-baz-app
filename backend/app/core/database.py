@@ -6,7 +6,9 @@ from app.core.config import settings
 engine = create_async_engine(
     settings.DATABASE_URL,
     echo=(settings.ENVIRONMENT == "development"), # Logs SQL queries during dev
-    future=True
+    future=True,
+    pool_pre_ping=True,
+    pool_recycle=3600
 )
 
 # 2. Session Factory: Creates isolated DB sessions for each request
