@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from sqlalchemy import String, Integer, Boolean, Date, DateTime
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, deferred
 from sqlalchemy.dialects.postgresql import ARRAY
 from pgvector.sqlalchemy import Vector
 
@@ -20,7 +20,7 @@ class Job(Base):
     grade_level: Mapped[str | None] = mapped_column(String)
     vacancies: Mapped[int | None] = mapped_column(Integer)
     
-    degree_area: Mapped[list[str] | None] = mapped_column(ARRAY(String))
+    degree_area: Mapped[str | None] = mapped_column(String)
     education_years: Mapped[int | None] = mapped_column(Integer)
     experience_years: Mapped[int | None] = mapped_column(Integer)
     
@@ -38,7 +38,7 @@ class Job(Base):
     is_active: Mapped[bool] = mapped_column(Boolean)
     
     search_text: Mapped[str | None] = mapped_column(String)
-    embedding: Mapped[list[float] | None] = mapped_column(Vector(1024))
+    embedding: Mapped[list[float] | None] = deferred(mapped_column(Vector(1024)))
     
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
