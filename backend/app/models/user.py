@@ -18,6 +18,7 @@ class UserProfile(Base):
     gender: Mapped[str | None] = mapped_column(String)
     district: Mapped[str | None] = mapped_column(String)
     division: Mapped[str | None] = mapped_column(String)
+    domicile: Mapped[str | None] = mapped_column(String)
     
     education_years: Mapped[int] = mapped_column(Integer, nullable=False)
     degree_title: Mapped[str | None] = mapped_column(String)
@@ -25,6 +26,7 @@ class UserProfile(Base):
     
     profile_embedding: Mapped[list[float] | None] = mapped_column(Vector(1024))
     resume_url: Mapped[str | None] = mapped_column(String)
+    resume_text: Mapped[str | None] = mapped_column(String)
     
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=text("now()")
