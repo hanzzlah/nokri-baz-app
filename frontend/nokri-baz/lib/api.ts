@@ -28,7 +28,6 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   }
 
   // 3. Make the request to FastAPI
-  console.log(`${API_BASE_URL}${endpoint}`);
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers,
