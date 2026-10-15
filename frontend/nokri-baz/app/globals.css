@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+
+@theme {
+  /* Fonts */
+  --font-sans: 'Plus Jakarta Sans', Inter, sans-serif;
+
+  /* Colors */
+  --color-background-start: #042f2e;
+  --color-background-middle: #064e3b;
+  --color-background-end: #84cc16;
+
+  --color-surface-card: rgba(255, 255, 255, 0.96);
+  --color-surface-border: rgba(255, 255, 255, 0.3);
+  --color-surface-input: #f8fafc;
+  --color-surface-inputBorder: #e2e8f0;
+  --color-surface-inputFocus: #059669;
+
+  --color-brand-primary: #065f46;
+  --color-brand-primaryHover: #047857;
+  --color-brand-accent: #84cc16;
+
+  /* Shadows */
+  --shadow-cardDepth: 0 25px 50px -12px rgba(4, 47, 46, 0.45);
+  --shadow-inputFocus: 0 0 0 4px rgba(132, 204, 22, 0.25);
+  --shadow-ctaHover: 0 10px 20px -5px rgba(6, 95, 70, 0.4);
+
+  /* Border Radius */
+  --radius-card: 1.5rem;
+  --radius-input: 0.75rem;
+  --radius-btn: 0.75rem;
+
+  /* Gradients & Background Images */
+  --background-image-gradient-cta: linear-gradient(135deg, #065f46 0%, #15803d 50%, #65a30d 100%);
+  --background-image-gradient-radial-bg: radial-gradient(circle at top left, rgba(4, 47, 46, 1) 0%, rgba(6, 78, 59, 1) 40%, rgba(132, 204, 22, 0.8) 100%);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f8fafc;
+}
