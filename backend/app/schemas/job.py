@@ -1,6 +1,5 @@
 from datetime import date
-from pydantic import BaseModel, ConfigDict, Field
-
+from pydantic import BaseModel, ConfigDict, field_validator
 
 class JobResponse(BaseModel):
     id: str
@@ -11,7 +10,7 @@ class JobResponse(BaseModel):
     employment_type: str | None = None
     grade_level: str | None = None
     vacancies: int | None = 1
-    degree_area: list[str] | None = None
+    degree_area: str | None = None
     education_years: int | None = None
     experience_years: int | None = None
     age_min: int | None = None
