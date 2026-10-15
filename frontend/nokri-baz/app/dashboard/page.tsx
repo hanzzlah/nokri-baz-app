@@ -403,9 +403,10 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 gap-4">
           {filteredMatches.length > 0 ? (
             filteredMatches.map((job) => (
-              <div
+              <Link
+                href={`/jobs/${job.id}`}
                 key={job.id}
-                className="group bg-surface-card border border-surface-inputBorder rounded-card p-5 sm:p-6 shadow-sm hover:shadow-cardDepth hover:border-brand-primary/30 transition-all duration-300 flex flex-col md:flex-row md:items-center gap-6"
+                className="group block bg-surface-card border border-surface-inputBorder rounded-card p-5 sm:p-6 shadow-sm hover:shadow-cardDepth hover:border-brand-primary/30 transition-all duration-300 flex flex-col md:flex-row md:items-center gap-6 cursor-pointer"
               >
                 {/* Score Badge */}
                 <div className="hidden md:flex flex-col items-center justify-center min-w-[100px] border-r border-slate-100 pr-6">
@@ -500,14 +501,12 @@ export default function DashboardPage() {
                     })}
                   </div>
 
-                  <Link
-                    href={`/jobs/${job.id}`}
-                    className="flex items-center gap-1 text-sm font-bold text-white bg-brand-primary hover:bg-brand-primaryHover px-5 py-2.5 rounded-btn shadow-sm transition-colors w-full md:w-auto justify-center"
-                  >
+                  {/* Changed from <Link> to a styled <div> to avoid nested anchors */}
+                  <div className="flex items-center gap-1 text-sm font-bold text-white bg-brand-primary group-hover:bg-[#00705a] px-5 py-2.5 rounded-btn shadow-sm transition-colors w-full md:w-auto justify-center">
                     View Details <ChevronRight size={16} />
-                  </Link>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))
           ) : (
             <div className="bg-surface-card border border-surface-inputBorder rounded-card p-12 text-center shadow-sm">
